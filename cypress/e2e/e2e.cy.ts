@@ -1,8 +1,18 @@
 /// <reference types="cypress" />
 const loginUser = require("../fixtures/loginUser.json");
+const checkoutInfo = require("../fixtures/checkoutInfo.json");
 
 import { LoginPage } from "../pages/LoginPage";
+import { HomePage } from "../pages/HomePage";
+import { ItemPage } from "../pages/ItemPage";
+import { ChartPage } from "../pages/ChartPage";
+import { CheckoutPage } from "../pages/CheckoutPage";
+
 const loginPage = new LoginPage();
+const homePage = new HomePage();
+const itemPage = new ItemPage();
+const chartPage = new ChartPage();
+const checkoutPage = new CheckoutPage();
 
 describe("Saucedemo automation tests", () => {
   // Napraviti Test Case koji će testirati uspešno dodavanje proizvoda u korpu
@@ -13,25 +23,25 @@ describe("Saucedemo automation tests", () => {
   });
 
   it("Add items to shopping-cart", () => {
-    cy.url().should("contain", "https://www.saucedemo.com/inventory.html");
-    cy.get(".btn_inventory").first().click();
-    cy.get(".shopping_cart_link").invoke("text").should("contain", "1");
-    cy.get(".btn_inventory").last().click();
-    cy.get(".shopping_cart_link").invoke("text").should("contain", "2");
+    homePage.validateHomePage();
+    homePage.selectInventoryNumber(0);
+    homePage.checkShopingItemsNumber("1");
+    homePage.selectInventoryNumber(1);
+    homePage.checkShopingItemsNumber("2");
   });
 
   // Napraviti Test Case koji će testirati uspešno uklanjanje proizvoda iz korpe (uklanjanje
   // jednog ili više proizvoda vaš izbor)
 
   it("Remove items from shopping-cart", () => {
-    cy.url().should("contain", "https://www.saucedemo.com/inventory.html");
-    cy.get(".btn_inventory").first().click();
-    cy.get(".shopping_cart_link").invoke("text").should("contain", "1");
-    cy.get(".btn_inventory").last().click();
-    cy.get(".shopping_cart_link").invoke("text").should("contain", "2");
-    cy.get(".btn_inventory").first().click();
-    cy.get(".btn_inventory").last().click();
-    cy.get(".shopping_cart_link").invoke("text").should("contain", "");
+    homePage.validateHomePage();
+    homePage.selectInventoryNumber(0);
+    homePage.checkShopingItemsNumber("1");
+    homePage.selectInventoryNumber(1);
+    homePage.checkShopingItemsNumber("2");
+    homePage.selectInventoryNumber(0);
+    homePage.selectInventoryNumber(1);
+    homePage.checkShopingItemsNumber("");
   });
 
   // Napraviti Test Case koji će testirati akciju uspešne kupovine proizvoda
@@ -39,27 +49,22 @@ describe("Saucedemo automation tests", () => {
   let itemTitile = "";
   let cartTitile = "";
   it("Buy item from shopping-cart", () => {
-    cy.url().should("contain", "https://www.saucedemo.com/inventory.html");
-    cy.get("#item_4_title_link")
-      .invoke("text")
-      .then((item_name) => {
-        itemTitile = item_name;
-        cy.wrap(itemTitile).as("itemTitile");
-      });
-    cy.get("#item_4_title_link").click();
-    cy.get("#add-to-cart").click();
-    cy.get("#shopping_cart_container").click();
-    cy.get("#checkout").click();
-    cy.get("#first-name").type("Marko");
-    cy.get("#last-name").type("Milentijevic");
-    cy.get("#postal-code").type("11000");
-    cy.get("#continue").click();
+    homePage.validateHomePage();
+    homePage.getItemTitle(itemTitile);
+    homePage.openItem("#item_4_title_link");
+    itemPage.addItemToChart();
+    itemPage.clickOnChart();
+    chartPage.clickCheckout();
+    checkoutPage.fillDataAndContinue(
+      checkoutInfo.name,
+      checkoutInfo.lastName,
+      checkoutInfo.zip
+    );
     cy.get("#item_4_title_link")
       .invoke("text")
       .then((cart_name) => {
         cartTitile = cart_name;
         cy.wrap(cartTitile).as("cartTitile");
-
         cy.get("@itemTitile").then((itemTitile) => {
           expect(itemTitile).to.contain(cartTitile);
         });
@@ -73,7 +78,7 @@ describe("Saucedemo automation tests", () => {
 
   it("Adding item prices for products", () => {
     let expectedTotal = 0;
-
+    homePage.validateHomePage();
     cy.get(".inventory_item_price")
       .eq(0)
       .then(($num1) => {
@@ -90,14 +95,15 @@ describe("Saucedemo automation tests", () => {
             expect(num1 + num2).equal(expectedTotal);
           });
       });
-    cy.get(".btn_inventory ").eq(0).click();
-    cy.get(".btn_inventory ").eq(1).click();
-    cy.get("#shopping_cart_container").click();
-    cy.get("#checkout").click();
-    cy.get("#first-name").type("Marko");
-    cy.get("#last-name").type("Milentijevic");
-    cy.get("#postal-code").type("11000");
-    cy.get("#continue").click();
+    homePage.selectInventoryNumber(0);
+    homePage.selectInventoryNumber(1);
+    itemPage.clickOnChart();
+    chartPage.clickCheckout();
+    checkoutPage.fillDataAndContinue(
+      checkoutInfo.name,
+      checkoutInfo.lastName,
+      checkoutInfo.zip
+    );
     cy.get('[data-test="subtotal-label"]')
       .invoke("text")
       .then(($cartTotal) => {
@@ -110,4 +116,12 @@ describe("Saucedemo automation tests", () => {
   // Napraviti Test Case koji će validaciju Home page stranice (stranica posle logovanja)
   // vršiti preko bilo koje slike proizvoda, ali uzeti u obzir da proizvodi prikazani na Home
   // page se menjaju vremenom
+
+  it("Validate home page by checking existance of picture", () => {
+    homePage.validateHomePage();
+    cy.get(".inventory_item_img > a > img")
+      .first()
+      .invoke("attr", "src")
+      .should("contain", ".jpg");
+  });
 });
