@@ -2,7 +2,10 @@
   "compilerOptions": {
     "target": "ES2023",
     "lib": ["dom", "DOM.Iterable", "ES2023"],
-    "types": ["cypress", "node"]
+    "types": ["cypress", "node"],
+    "strict": true, // strict type-checking options
+    "noImplicitAny": true, // error reporting for expressions and declarations with an impied 'any' type
+    "strictNullChecks": true // when type checking, take into account 'null' and 'undefined'
   },
   "include": ["**/*.ts"]
 }

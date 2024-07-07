@@ -36,8 +36,8 @@ describe("Saucedemo automation tests", () => {
 
   // Napraviti Test Case koji će testirati akciju uspešne kupovine proizvoda
 
-  let itemTitile;
-  let cartTitile;
+  let itemTitile = "";
+  let cartTitile = "";
   it("Buy item from shopping-cart", () => {
     cy.url().should("contain", "https://www.saucedemo.com/inventory.html");
     cy.get("#item_4_title_link")
