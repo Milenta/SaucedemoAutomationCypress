@@ -82,16 +82,12 @@ describe("Saucedemo automation tests", () => {
     cy.get(".inventory_item_price")
       .eq(0)
       .then(($num1) => {
-        // parse text to float
         const num1 = parseFloat($num1.text().replace("$", ""));
-        // get element id #num2
         cy.get(".inventory_item_price")
           .eq(1)
           .then(($num2) => {
-            // parse text to float
             const num2 = parseFloat($num2.text().replace("$", ""));
             expectedTotal = num1 + num2;
-            // expect/assert number total equal to some expected total
             expect(num1 + num2).equal(expectedTotal);
           });
       });
@@ -107,7 +103,6 @@ describe("Saucedemo automation tests", () => {
     cy.get('[data-test="subtotal-label"]')
       .invoke("text")
       .then(($cartTotal) => {
-        // parse text to float
         const cartT = parseFloat($cartTotal.replace("Item total: $", ""));
         expect(cartT).equal(expectedTotal);
       });
