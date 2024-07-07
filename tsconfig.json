@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "target": "ES2023",
+    "lib": ["dom", "DOM.Iterable", "ES2023"],
+    "types": ["cypress", "node"]
+  },
+  "include": ["**/*.ts"]
+}
