@@ -1,14 +1,14 @@
 export class HomePage {
-  validateHomePage() {
+  validateHomePage(): void {
     cy.url().should("contain", "https://www.saucedemo.com/inventory.html");
   }
-  selectInventoryNumber(num: number) {
+  selectInventoryNumber(num: number): void {
     cy.get(".btn_inventory").eq(num).click();
   }
-  checkShopingItemsNumber(num: string) {
+  checkShopingItemsNumber(num: string): void {
     cy.get(".shopping_cart_link").invoke("text").should("contain", num);
   }
-  getItemTitle(itemTitile: string) {
+  getItemTitle(itemTitile: string): void {
     cy.get("#item_4_title_link")
       .invoke("text")
       .then((item_name) => {
@@ -17,7 +17,7 @@ export class HomePage {
       });
   }
   // open item in full screen
-  openItem(id: string) {
+  openItem(id: string): void {
     cy.get(id).click();
   }
 }

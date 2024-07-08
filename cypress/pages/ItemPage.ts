@@ -1,8 +1,8 @@
 export class ItemPage {
-  addItemToChart() {
+  addItemToChart(): void {
     cy.get("#add-to-cart").click();
   }
-  clickOnChart() {
+  clickOnChart(): void {
     cy.get("#shopping_cart_container").click();
   }
 }

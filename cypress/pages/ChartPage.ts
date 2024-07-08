@@ -1,5 +1,5 @@
 export class ChartPage {
-  clickCheckout() {
+  clickCheckout(): void {
     cy.get("#checkout").click();
   }
 }
