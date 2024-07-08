@@ -46,8 +46,8 @@ describe("Saucedemo automation tests", () => {
 
   // Napraviti Test Case koji će testirati akciju uspešne kupovine proizvoda
 
-  let itemTitile = "";
-  let cartTitile = "";
+  let itemTitile: string;
+  let cartTitile: string;
   it("Buy item from shopping-cart", () => {
     homePage.validateHomePage();
     homePage.getItemTitle(itemTitile);
@@ -77,7 +77,7 @@ describe("Saucedemo automation tests", () => {
   // kupovina 2+ proizvoda
 
   it("Adding item prices for products", () => {
-    let expectedTotal = 0;
+    let expectedTotal: number;
     homePage.validateHomePage();
     cy.get(".inventory_item_price")
       .eq(0)
