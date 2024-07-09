@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
-const loginUser = require("../fixtures/loginUser.json");
-const checkoutInfo = require("../fixtures/checkoutInfo.json");
+const loginUser: user = require("../fixtures/loginUser.json");
+const checkoutInfo: userDetails = require("../fixtures/checkoutInfo.json");
 
 import { LoginPage } from "../pages/LoginPage";
 import { HomePage } from "../pages/HomePage";
@@ -13,6 +13,16 @@ const homePage = new HomePage();
 const itemPage = new ItemPage();
 const chartPage = new ChartPage();
 const checkoutPage = new CheckoutPage();
+
+type user = {
+  userName: string;
+  password: string;
+};
+type userDetails = {
+  name: string;
+  lastName: string;
+  zip: string;
+};
 
 describe("Saucedemo automation tests", () => {
   // Napraviti Test Case koji će testirati uspešno dodavanje proizvoda u korpu
