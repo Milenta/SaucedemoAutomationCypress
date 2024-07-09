@@ -1,4 +1,7 @@
 {
   "userName": "standard_user",
-  "password": "secret_sauce"
+  "password": "secret_sauce",
+  "name": "Marko",
+  "lastName": "Milentijevic",
+  "zip": "11000"
 }

@@ -1,6 +1,5 @@
 /// <reference types="cypress" />
 const loginUser: user = require("../fixtures/loginUser.json");
-const checkoutInfo: userDetails = require("../fixtures/checkoutInfo.json");
 
 import { LoginPage } from "../pages/LoginPage";
 import { HomePage } from "../pages/HomePage";
@@ -17,8 +16,6 @@ const checkoutPage = new CheckoutPage();
 type user = {
   userName: string;
   password: string;
-};
-type userDetails = {
   name: string;
   lastName: string;
   zip: string;
@@ -66,9 +63,9 @@ describe("Saucedemo automation tests", () => {
     itemPage.clickOnChart();
     chartPage.clickCheckout();
     checkoutPage.fillDataAndContinue(
-      checkoutInfo.name,
-      checkoutInfo.lastName,
-      checkoutInfo.zip
+      loginUser.name,
+      loginUser.lastName,
+      loginUser.zip
     );
     cy.get("#item_4_title_link")
       .invoke("text")
@@ -106,9 +103,9 @@ describe("Saucedemo automation tests", () => {
     itemPage.clickOnChart();
     chartPage.clickCheckout();
     checkoutPage.fillDataAndContinue(
-      checkoutInfo.name,
-      checkoutInfo.lastName,
-      checkoutInfo.zip
+      loginUser.name,
+      loginUser.lastName,
+      loginUser.zip
     );
     cy.get('[data-test="subtotal-label"]')
       .invoke("text")
