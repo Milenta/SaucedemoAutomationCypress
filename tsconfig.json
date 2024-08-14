@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
-    "target": "ES2023", // ECMAScript version
+    "target": "ES2023", // ECMAScript version - js version in what code is compiled to
     "lib": ["dom", "DOM.Iterable", "ES2023"],
     "types": ["cypress", "node"],
     "strict": true, // strict type-checking options
     "noImplicitAny": true, // error reporting for expressions and declarations with an impied 'any' type
     "strictNullChecks": true // when type checking, take into account 'null' and 'undefined'
   },
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts"],
+  "exclude": [] // exclude default is node_modules folder (it will not be compiled)
 }

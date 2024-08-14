@@ -8,5 +8,5 @@ To run project locally execute next steps:
 4. Install dependencies with command : npm ci
 5. Custom commans for running all tests are :
 
-- "npm run cy:runChrome" to run all tests in headless mode in Chrome browser
-- "npm run cy:runFireFox" to run all tests in headless mode in Fire Fox browser
+- to run all tests in headless mode in Chrome browser + "npm run cy:runChrome" 
+- to run all tests in headless mode in Fire Fox browser + "npm run cy:runFireFox" 
